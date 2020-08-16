@@ -1,4 +1,5 @@
 // Copyright 2014 The Macaron Authors
+// Copyright 2020 the Emmanuel developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License"): you may
 // not use this file except in compliance with the License. You may obtain
@@ -12,7 +13,7 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
-// Package i18n provides an Internationalization and Localization middleware for Macaron applications.
+// Package i18n provides an Internationalization and Localization middleware for Emmanuel applications.
 package i18n
 
 import (
@@ -21,9 +22,9 @@ import (
 	"path"
 	"strings"
 
+	"github.com/go-emmanuel/emmanuel"
 	"github.com/unknwon/i18n"
 	"golang.org/x/text/language"
-	"gopkg.in/macaron.v1"
 )
 
 // isFile returns true if given path is a file,
@@ -113,7 +114,7 @@ func prepareOptions(options []Options) Options {
 	if len(opt.Section) == 0 {
 		opt.Section = "i18n"
 	}
-	sec := macaron.Config().Section(opt.Section)
+	sec := emmanuel.Config().Section(opt.Section)
 
 	opt.SubURL = strings.TrimSuffix(opt.SubURL, "/")
 
@@ -159,10 +160,10 @@ type LangType struct {
 // I18n is a middleware provides localization layer for your application.
 // Paramenter langs must be in the form of "en-US", "zh-CN", etc.
 // Otherwise it may not recognize browser input.
-func I18n(options ...Options) macaron.Handler {
+func I18n(options ...Options) emmanuel.Handler {
 	opt := prepareOptions(options)
 	m := initLocales(opt)
-	return func(ctx *macaron.Context) {
+	return func(ctx *emmanuel.Context) {
 		isNeedRedir := false
 		hasCookie := false
 

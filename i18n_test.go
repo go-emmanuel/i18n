@@ -1,4 +1,5 @@
 // Copyright 2014 The Macaron Authors
+// Copyright 2020 the Emmanuel developers
 //
 // Licensed under the Apache License, Version 2.0 (the "License"): you may
 // not use this file except in compliance with the License. You may obtain
@@ -21,8 +22,8 @@ import (
 	"runtime"
 	"testing"
 
+	"github.com/go-emmanuel/emmanuel"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/macaron.v1"
 )
 
 func TestI18n(t *testing.T) {
@@ -31,7 +32,7 @@ func TestI18n(t *testing.T) {
 			assert.Equal(t, "no language is specified", recover())
 		}()
 
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(I18n(Options{}))
 	})
 
@@ -40,7 +41,7 @@ func TestI18n(t *testing.T) {
 			assert.Equal(t, "length of langs is not same as length of names", recover())
 		}()
 
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(I18n(Options{
 			Langs: []string{"en-US"},
 		}))
@@ -55,7 +56,7 @@ func TestI18n(t *testing.T) {
 			}
 		}()
 
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(I18n(Options{
 			Directory: "404",
 			Langs:     []string{"en-US"},
@@ -64,7 +65,7 @@ func TestI18n(t *testing.T) {
 	})
 
 	t.Run("with correct options", func(t *testing.T) {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(I18n(Options{
 			Files: map[string][]byte{"locale_en-US.ini": []byte("")},
 			Langs: []string{"en-US"},
@@ -81,7 +82,7 @@ func TestI18n(t *testing.T) {
 	})
 
 	t.Run("set by Accept-Language", func(t *testing.T) {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(I18n(Options{
 			Langs: []string{"en-US", "zh-CN", "it-IT"},
 			Names: []string{"English", "简体中文", "Italiano"},
@@ -100,7 +101,7 @@ func TestI18n(t *testing.T) {
 	})
 
 	t.Run("set to default language", func(t *testing.T) {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(I18n(Options{
 			Langs: []string{"en-US", "zh-CN", "it-IT"},
 			Names: []string{"English", "简体中文", "Italiano"},
@@ -120,7 +121,7 @@ func TestI18n(t *testing.T) {
 }
 
 func TestRedirect(t *testing.T) {
-	m := macaron.New()
+	m := emmanuel.New()
 	m.Use(I18n(Options{
 		Langs:    []string{"en-US"},
 		Names:    []string{"English"},
